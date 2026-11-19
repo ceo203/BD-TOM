@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CYBER TOM BD Controller</title>
+<style>
+*{box-sizing:border-box}
+body{
+  background:#05080f;color:#fff;font-family:Arial;
+  min-height:100vh;display:grid;place-items:center;margin:0;padding:18px
+}
+.card{
+  width:100%;max-width:420px;background:#101827;padding:24px;
+  border-radius:20px;border:1px solid #00eaff;
+  box-shadow:0 0 25px #00eaff30
+}
+h1{text-align:center;color:#00eaff}
+p{text-align:center;color:#9caec2}
+input{
+  width:100%;padding:14px;margin-top:10px;
+  background:#070c15;color:white;border:1px solid #29465a;
+  border-radius:10px;font-size:16px
+}
+button{
+  width:100%;padding:14px;margin-top:14px;
+  border:0;border-radius:10px;font-weight:bold;font-size:15px
+}
+.connect{background:#00dfff;color:#001018}
+.send{background:#00ff9c;color:#00150b}
+.status{
+  margin-top:18px;padding:14px;background:#070c15;
+  border-radius:10px;color:#80eaff;text-align:center
+}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>CYBER TOM BD</h1>
+  <p>CONTROLLER PANEL</p>
+
+  <input id="receiverCode" placeholder="Receiver Pairing Code">
+
+  <button class="connect" onclick="connect()">CONNECT</button>
+
+  <input id="password" type="password" placeholder="Demo Password">
+
+  <button class="send" onclick="sendRequest()">SEND REQUEST</button>
+
+  <div class="status" id="status">STATUS: DISCONNECTED</div>
+</div>
+
+<script>
+let connected = false;
+
+function connect(){
+  const code = document.getElementById("receiverCode").value.trim();
+
+  if(code.length < 4){
+    show("সঠিক Pairing Code লিখুন");
+    return;
+  }
+
+  connected = true;
+  show("LOCAL DEMO CONNECTED");
+}
+
+function sendRequest(){
+  if(!connected){
+    show("আগে CONNECT করুন");
+    return;
+  }
+
+  const pass = document.getElementById("password").value;
+
+  if(!pass){
+    show("Demo Password লিখুন");
+    return;
+  }
+
+  // Local demo only: no other phone is contacted.
+  if(pass !== "1234"){
+    show("DEMO PASSWORD INCORRECT");
+    return;
+  }
+
+  show("DEMO REQUEST CREATED — RECEIVER NOT CONTACTED");
+}
+
+function show(message){
+  document.getElementById("status").textContent = message;
+}
+</script>
+</body>
+</html>
